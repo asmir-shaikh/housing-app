@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    {% load static %}
+    <div class="container border border-4 rounded my-3 py-4" style="background: #f3f4f6; width: 40rem;">
+        <form class="d-flex flex-column align-items-center" method="post">
+            {% csrf_token %}
+
+            <h1 class="mb-3">Submit a Housing Option</h1>
+            <h6 clas = "mb-3">
+                You can submit a housing option that you didn't find in our listings. An admin will review
+                your submission and may approve it to appear in our official listings! Until it's approved,
+                you can find it under "Unofficial Listings"
+
+            </h6>
+            <br>
+
+            {{ form.as_table }}
+            <br/>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    </div>
+
+
+{% endblock body %}

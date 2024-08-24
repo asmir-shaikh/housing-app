@@ -1,0 +1,51 @@
+{% load static %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<div id="map"></div>
+    
+    <script>
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 38.03454158957033, lng: -78.50596018056791},
+            zoom: 13,
+            mapId: '408d30bbacde6a12'
+      });
+      // Call Geocode
+      geocode();
+        function geocode() {
+            var location = "{{housing.location}}" + ", Charlottesville"
+            axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+                params:{
+                    address: location,
+                    key: 'AIzaSyATyjqds3W1nzT7mxkraRo_TxAMrXhSRZo'
+                }
+            })
+            .then(function(response){
+
+                // Formatted Longitude and latitude
+                var latitude = response.data.results[0].geometry.location.lat
+                var longitude = response.data.results[0].geometry.location.lng
+                image = "https://housingappbucket.s3.amazonaws.com/Webp.net-resizeimage.png"
+                
+                var marker = new google.maps.Marker({
+                    position: { lat: latitude, lng: longitude },
+                    map,
+                    icon: image,
+                    title: "{{housing.location}}",
+                    optimized: false // This is here to make sure the title shows up when you hover over the marker... not sure why this works
+                });
+            }).catch(function(error){
+                console.log(error)
+            })
+        }
+  
+}
+    </script>
+  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyxmnuWqpUWN_6GOqOVHCSMvd3DH5YqWk&map_ids=408d30bbacde6a12&callback=initMap"></script>
+    <style>
+        #map{
+            height: 60vh;
+            width: 50%;
+            margin: auto;
+        }
+    </style>

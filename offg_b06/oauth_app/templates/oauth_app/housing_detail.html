@@ -1,0 +1,258 @@
+<!--
+/***************************************************************************************
+*  REFERENCES
+*  Title: How TO - Horizontal Scroll Menu
+*  Author: wsschools
+*  URL: https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp
+*
+*  Title:   HTML Layout Elements and Techniques
+*  Author: wsschools
+*  URL: https://www.w3schools.com/html/html_layout.asp
+*
+***************************************************************************************/
+-->
+
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+
+{% block body %}
+    {% load static %}
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #325;
+  padding: 10px;
+  text-align: center;
+  font-size: 30px;
+  color: white;
+}
+
+section {
+  display: -webkit-flex;
+  display: flex;
+}
+
+nav {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  background: #ccc;
+  padding: 20px;
+}
+
+/* Style the content */
+article {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  background-color: #f1f1f1;
+  padding: 10px;
+
+header {
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+myDiv {
+  background-color: #333;
+}
+}
+</style>
+
+<head>
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+/* Dashed border */
+hr.dashed {
+  border-top: 3px dashed #bbb;
+}
+
+/* Dotted border */
+hr.dotted {
+  border-top: 3px dotted #bbb;
+}
+
+/* Solid border */
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
+/* Rounded border */
+hr.rounded {
+  border-top: 8px solid #bbb;
+  border-radius: 5px;
+}
+</style>
+</head>
+
+</head>
+
+<body>
+<header>
+  <h2>Housing Details</h2>
+</header>
+
+<hr class="dashed">
+
+<section>
+  <nav>
+      <style>
+        .checked {
+        color: orange;
+        }
+        .center {
+        margin: auto;
+        width: 90%;
+        padding: 40px;
+        }
+        .right {
+        position: auto;
+        right: 0px;
+        width: 300px;
+        padding: 10px;
+        text-align: right;
+        font-size: 15px
+}
+}
+
+        </style>
+      <div class="row">
+        <img class="card-img-top" style="height: 200px;" src="{{ housing.imgadd }}">
+      </div>
+      <div class="center">
+        {% for star in orange_star %}
+        <span class="fa fa-star checked fa-2x"></span>
+        {% endfor %}
+        {% for star in grey_star %}
+        <span class="fa fa-star fa-2x"></span>
+        {% endfor %}
+        {% if num_surveys > 0 %}
+            <figcaption class="blockquote-footer right">
+            from {{housing.num_ratings}} surveys
+            </figcaption>
+        {% else %}
+            <figcaption class="blockquote-footer right">
+            no ratings available, rate this housing option now!
+            </figcaption>
+        {% endif %}
+
+      </div>
+
+  </nav>
+  <article>
+    <h1 style="font-family: CostarBrownRegular,sans-serif;">{{housing.title}}</h1>
+    <div class="housinginfo">
+    <p style="color:green"> Rent: ${{housing.rent}}</p> <p>Location: {{housing.location}} </p>
+      <p> Bed: {{housing.bed}} &nbsp;&nbsp; Bath: {{housing.bath}} &nbsp;&nbsp; Footage: {{housing.footage}} sq ft</p>
+    
+      <!-- External Button Source: https://www.freecodecamp.org/news/html-button-link-code-examples-how-to-make-html-hyperlinks-using-the-href-attribute-on-tags/-->
+      <a href={{ housing.link }}>
+        <button class="btn btn-outline-primary">View Property Website to Learn More!</button>
+      </a>
+    <br/><br/>
+    <p> {{housing.description}} </p>
+  </div>
+    
+      <form action="{% url 'oauth_app:popularity' housing.id %}" method="post" class="form">
+    {% csrf_token %}
+  <label for="eval">On a scale of 1 to 5, how would you rate this housing option?</label>
+  <input type="radio" id="eval1" name="eval" value="1">
+  <label for="eval1">1</label>
+  <input type="radio" id="eval2" name="eval" value="2">
+  <label for="eval2">2</label>
+  <input type="radio" id="eval3" name="eval" value="3">
+  <label for="eval3">3</label>
+  <input type="radio" id="eval4" name="eval" value="4">
+  <label for="eval4">4</label>
+  <input type="radio" id="eval5" name="eval" value="5">
+  <label for="eval5">5</label>
+    <label> &nbsp; </label>
+    <button type="submit" class="btn btn-primary" >Submit</button>
+</form>
+<br/>
+
+{% if fav %}
+<div>
+  <a href = "{% url 'oauth_app:fav_add' housing.id %}" class = "btn btn-outline-primary">Remove From Favorites</a>
+</div>
+{% else %}
+<div>
+  <a href = "{% url 'oauth_app:fav_add' housing.id %}" class = "btn btn-outline-primary">Add to favorites</a>
+</div>
+{% endif %}
+
+
+  </article>
+</section>
+
+<hr class="dashed">
+
+<div style = 'text-align: center;'>
+  {% if call %}
+    <h6>The housing option is {{distance}} from grounds. This will take approximately {{duration}} to get to!</h6>
+  {% endif %}
+</div>
+
+{% include 'map.html' %}
+
+<hr class="dashed">
+
+<head>
+<style>
+div.scrollmenu {
+  background-color: #333;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+.housinginfo {
+    color: #000;
+    font-family: "CostarBrownRegular",sans-serif;
+    font-size: 1.125rem;
+}
+</style>
+</head>
+<body>
+<section style="background-color:#333; padding=10px">
+    <br>
+  <h3 style="color:white;"> <br> &nbsp;Additional Options We Recommend to Look over: </h3>
+</section>
+
+<div class="scrollmenu">
+
+    {% for h in housings %}
+                <a href="{% url 'oauth_app:housing_detail' h.id %}">
+                    <img class="card-img-top" style="height: 200px;" src="{{ h.imgadd }}">
+                </a>
+            {% endfor %}
+
+</div>
+
+</body>
+
+<hr class="dashed">
+
+{% endblock body %}

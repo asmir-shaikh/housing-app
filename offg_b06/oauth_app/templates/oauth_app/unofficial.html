@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    {% load static %}
+
+    <div class="container d-flex flex-column align-items-center my-4">
+        <h3>Housing options that have not been approved by our staff</h3>
+    </div>
+
+    <div class="container">
+        <form style="background: #f0f2f7;" class="d-flex flex-row align-items-center justify-content-between border border-2 rounded px-4 py-2 mb-4" action="{% url 'oauth_app:home' %}" method="GET">
+            <div class="form-group" style="width: 35%;">
+                <label for="title">Name</label>
+                <input class="form-control" type="text" name="title" id="title" value="{{ filters.title }}"/>
+            </div>
+            <div class="form-group" style="width: 10%;">
+                <label for="beds">Beds</label>
+                <input class="form-control" type="number" name="beds" id="beds" value="{{ filters.beds }}"/>
+            </div>
+            <div class="form-group" style="width: 10%;">
+                <label for="baths">Baths</label>
+                <input class="form-control" type="number" name="baths" id="baths" value="{{ filters.baths }}"/>
+            </div>
+            <div class="form-group text-center" style="width: 25%;">
+                <label>Price Range</label>
+                <div class="d-inline-flex text-center align-items-center">
+                    <label class="mr-2 align-middle" for="price_min">From</label>
+                    <input class="form-control" type="number" name="price_min" id="price_min" step="100" value="{{ filters.price_min }}"/>
+
+                    <label class="mx-2" for="price_max">To</label>
+                    <input class="form-control" type="number" name="price_max" id="price_max" step="100" value="{{ filters.price_max }}"/>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary mt-3" type="submit" id="btn">Search</button>
+            </div>
+        </form>
+
+        <hr>
+
+        {% if housing|length > 0 %}
+            <div class="d-inline-flex flex-wrap justify-content-center">
+                {% for h in housing %}
+                    <div class="card m-2" style="width: 300px; background: #f0f2f7;">
+                        <a href="{% url 'oauth_app:housing_detail' h.id %}">
+                        <img class="card-img-top" style="height: 200px;" src="{{ h.imgadd }}">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="d-flex flex-row justify-content-between">
+
+                                <h5 class="card-title">{{ h.title }}</h5>
+                        </a>
+                                <h5 class="card-text text-success">${{ h.rent }}</h5>
+                            </div>
+                            <p class="card-text text-center">{{ h.location }}</p>
+                            <div class="d-flex flex-row justify-content-around">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa fa-bed mr-1" style="font-size:24px"></i>
+                                    <p class="card-text">{{ h.bed }}</p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="fa fa-bath mr-1" style="font-size:20px"></i>
+                                    <p class="card-text">{{ h.bath }}</p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width: 25px;" class="h-5 w-5"
+                                         viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93
+                                                17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119
+                                                16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                                    </svg>
+                                    <p class="card-text">{{ h.footage }} sq ft</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="background: #f0f2f7;" class="alert alert-secondary text-center" role="alert">
+                No housing options matched your search criteria :(
+            </div>
+        {% endif %}
+    </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock body %}

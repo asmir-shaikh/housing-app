@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <title>UVA Off-Grounds Housing</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+              integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+              integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Off-grounds Housing Navbar">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center">
+                    <svg style="width: 30px; height: 30px;" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="white">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1
+                               1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <a class="navbar-brand" href="{% url 'oauth_app:home' %}">FastHome</a>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#housingnavbar"
+                        aria-controls="housingnavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="housingnavbar">
+                    <div>
+                        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        
+                            <li class="submit active">
+                                <a class="nav-link" href="{% url 'oauth_app:HousingForm' %}">Submit</a>
+                            </li>
+                            <li class="unofficial active">
+                                <a class="nav-link" href="{% url 'oauth_app:unofficial' %}">Unofficial Listings</a>
+                            </li>
+                            <li class="favorites active">
+                                <a class="nav-link" href="{% url 'oauth_app:favorites' %}">Favorites</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex align-items-center mr-4">
+                        <svg style="height: 25px; width: 25px;" xmlns="http://www.w3.org/2000/svg"
+                             class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                                  d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879
+                                    1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div class="btn-group">
+                            
+                            <button class="btn btn-sm dropdown-toggle bg-dark" id="profilebutton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              {{request.user}}
+                            </button>
+                            
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                              <a class="dropdown-item" href="{% url 'oauth_app:favorites' %}">View Favorites</a>
+                              <a class="dropdown-item" href="{% url 'oauth_app:profile' %}">View Profile</a>
+                            </div>
+                          </div>
+                        <a class="nav-link text-white" href="{% url 'oauth_app:logout' %}">Logout</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </nav>
+
+        <div>
+            {% block body %}{% endblock body %}
+        </div>
+
+        <footer>
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="{% url 'oauth_app:home' %}" class="nav-link px-2 text-muted">Home</a></li>
+                <li class="nav-item"><a href="{% url 'oauth_app:HousingForm' %}" class="nav-link px-2 text-muted">Submit</a></li>
+                <li class="nav-item"><a href="{% url 'oauth_app:unofficial' %}" class="nav-link px-2 text-muted">Unofficial Listings</a></li>
+                <li class="nav-item"><a href="{% url 'oauth_app:favorites' %}" class="nav-link px-2 text-muted">Favorites</a></li>
+                <li class="nav-item"><a href="{% url 'oauth_app:profile' %}" class="nav-link px-2 text-muted">Profile</a></li>
+
+            </ul>
+
+            <p class="text-center text-muted">CS 4640 Group B-06</p>
+        </footer>
+
+    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+                crossorigin="anonymous">
+        </script>
+    </body>
+    <style>
+        #profilebutton {
+            color: white;
+        }
+
+    </style>
+</html>

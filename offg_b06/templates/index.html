@@ -1,0 +1,20 @@
+<!-- {% load socialaccount %}
+<html>
+<body>
+<h1>Google Login Page </h1>
+{% if user.is_authenticated %}
+  <p>Welcome, You are logged in as {{ user.username }}</p>
+  <a href="/oauth_app/logout">Logout</a>
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>HTML Meta Tag</title>
+      <meta http-equiv = "refresh" content = "0; url = {% url 'oauth_app:home' %}" />
+   </head>
+</html>
